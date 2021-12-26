@@ -54,9 +54,12 @@ addArg "--config" "$OPENVPN/openvpn.conf"
 
 source "$OPENVPN/ovpn_env.sh"
 
-# Source a possible iptables file, but ignore errors
-if [ -f "$OPENVPN/ovpn_iptables.sh" ]; then
-  source "$OPENVPN/ovpn_iptables.sh" || true
+# Source iptables directory now, but ignore errors
+if [ -d "$OPENVPN/scripts" ]; then
+  ls -1 $OPENVPN/scripts/[0-9][0-9]*.sh | sort | while read FN
+  do
+    source "$FN" || true
+  done
 fi
 
 mkdir -p /dev/net
