@@ -56,8 +56,9 @@ source "$OPENVPN/ovpn_env.sh"
 
 # Source iptables directory now, but ignore errors
 if [ -d "$OPENVPN/scripts" ]; then
-  ls -1 $OPENVPN/scripts/[0-9][0-9]*.sh | sort | while read FN
+  for FN in $(find $OPENVPN/scripts -maxdepth 1 -name '[0-9][0-9]*.sh' | sort)
   do
+    echo "Source script '$FN'"
     source "$FN" || true
   done
 fi
